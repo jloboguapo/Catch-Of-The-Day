@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    "lines-around-comment": [
+      2,
+      {
+        "afterBlockComment": true,
+        "afterLineComment": true,
+        "beforeBlockComment": true,
+        "beforeLineComment": true
+      }
+    ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "arrowParens": "avoid",
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 80
+      }
+    ]
+  }
+}
