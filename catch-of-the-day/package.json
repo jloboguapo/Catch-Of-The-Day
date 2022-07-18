@@ -12,6 +12,7 @@
     "@babel/plugin-transform-react-jsx": "^7.18.6",
     "autoprefixer-stylus": "^1.0.0",
     "firebase": "^9.9.0",
+    "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "re-base": "^4.0.0",
     "react": "^18.2.0",
