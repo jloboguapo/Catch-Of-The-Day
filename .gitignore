@@ -5,3 +5,4 @@ node_modules/
 notes.md
 catch-of-the-day/build/
 package-lock.json
+yarn-error.log
