@@ -10,6 +10,7 @@ const StorePicker = () => {
     e.preventDefault();
     navigate(`/store/${myInput.current.value}`);
   };
+
   return (
     <form className="store-selector" onSubmit={goToStore}>
       <h2>Please Enter a store</h2>
