@@ -1,16 +1,16 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { getFunName } from '../helpers';
 
 const StorePicker = ({ onStoreChange, storeId }) => {
   const myInput = useRef();
   const navigate = useNavigate();
 
   const goToStore = e => {
+    const store = myInput.current.value;
     e.preventDefault();
-    onStoreChange(myInput.current.value);
-    navigate(`/store/${myInput.current.value}`);
+    onStoreChange(store);
+    navigate(`/store/${store}`);
   };
 
   return (
@@ -21,7 +21,7 @@ const StorePicker = ({ onStoreChange, storeId }) => {
         ref={myInput}
         required
         placeholder="Store Name"
-        defaultValue={storeId || getFunName()}
+        defaultValue={storeId}
       />
       <button type="submit">Visit Store →</button>
     </form>

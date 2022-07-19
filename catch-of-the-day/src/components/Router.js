@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StorePicker from './StorePicker';
 import App from './App';
 import NotFound from './NotFound';
+import { getFunName } from '../helpers';
 
 const Router = () => {
-  const [storeId, setStoreId] = useState('');
+  const [storeId, setStoreId] = useState(getFunName());
 
   const changeStore = newStore => {
     setStoreId(newStore);
