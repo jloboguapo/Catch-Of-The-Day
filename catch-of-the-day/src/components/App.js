@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
 import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
+import base from '../base';
 
 const App = () => {
   const [fishes, setFishes] = useState({});
   const [order, setOrder] = useState({});
+  const { storeId } = useParams();
+
+  useEffect(() => {
+    console.log(storeId);
+  }, []);
 
   const addFish = fish => {
     fishes[`fish${Date.now()}`] = fish;
