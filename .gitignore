@@ -3,6 +3,6 @@ node_modules/
 .DS_Store
 .idea
 notes.md
-catch-of-the-day/build/
+./catch-of-the-day/build/
 yarn-error.log
-yarn.lock
+./catch-of-the-day/src/yarn.lock
