@@ -1,16 +1,17 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import base from '../base';
 
-const StorePicker = ({ onStoreChange, storeId }) => {
+const StorePicker = ({ storeId }) => {
   const myInput = useRef();
   const navigate = useNavigate();
 
   const goToStore = e => {
-    const store = myInput.current.value;
+    const newStore = myInput.current.value;
     e.preventDefault();
-    onStoreChange(store);
-    navigate(`/store/${store}`);
+    base.ref(`${newStore}/storeId`).update({ store: newStore });
+    navigate(`/store/${newStore}`);
   };
 
   return (
@@ -28,9 +29,6 @@ const StorePicker = ({ onStoreChange, storeId }) => {
   );
 };
 
-StorePicker.propTypes = {
-  onStoreChange: PropTypes.func.isRequired,
-  storeId: PropTypes.string.isRequired,
-};
+StorePicker.propTypes = { storeId: PropTypes.string.isRequired };
 
 export default StorePicker;
