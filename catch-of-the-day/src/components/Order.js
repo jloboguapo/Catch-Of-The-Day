@@ -8,6 +8,7 @@ const Order = ({ fishes, order }) => {
     const fish = fishes[key];
     const count = order[key];
     const isAvailable = fish && fish.status === 'available';
+
     if (isAvailable) {
       return prevTotal + count * fish.price;
     }
@@ -35,7 +36,7 @@ const Order = ({ fishes, order }) => {
   };
   return (
     <div className="order-wrap">
-      <h2>Order!!!</h2>
+      <h2>Order</h2>
       <ul className="order">{orderIds.map(renderOrder)}</ul>
       <div className="total">
         Total:
