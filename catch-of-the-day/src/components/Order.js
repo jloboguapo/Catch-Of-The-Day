@@ -5,7 +5,7 @@ import { formatPrice } from '../helpers';
 const Order = ({ fishes, order }) => {
   const orderIds = Object.keys(order);
   const total = orderIds.reduce((prevTotal, key) => {
-    const fish = fishes.fishes[key];
+    const fish = fishes[key];
     const count = order[key];
     const isAvailable = fish && fish.status === 'available';
     if (isAvailable) {
@@ -15,9 +15,10 @@ const Order = ({ fishes, order }) => {
   }, 0);
 
   const renderOrder = key => {
-    const fish = fishes.fishes[key];
+    const fish = fishes[key];
     const count = order[key];
     const isAvailable = fish && fish.status === 'available';
+    if (!fish) return null;
     if (!isAvailable) {
       return (
         <li key={key}>
