@@ -12,10 +12,17 @@ const App = () => {
   const [fishes, setFishes] = useState({});
   const [order, setOrder] = useState({});
   const { storeId } = useParams();
+  const baseRef = base.ref(`${storeId}/fishes`);
 
   useEffect(() => {
-    console.log(storeId);
+    baseRef.on('value', data => {
+      data.val() && setFishes(data.val());
+    });
   }, []);
+
+  useEffect(() => {
+    baseRef.update(fishes);
+  }, [fishes]);
 
   const addFish = fish => {
     fishes[`fish${Date.now()}`] = fish;
@@ -23,10 +30,8 @@ const App = () => {
   };
 
   const loadSampleFishes = () => {
-    setFishes({ fishes: sampleFishes });
+    setFishes({ ...sampleFishes });
   };
-
-  const fishies = fishes.fishes;
 
   const addToOrder = key => {
     order[key] = order[key] + 1 || 1;
@@ -39,11 +44,11 @@ const App = () => {
         <Header tagline="Fresh Seafood Market" />
         <ul className="fishes">
           {!isEmpty(fishes) &&
-            Object.keys(fishies).map(key => (
+            Object.keys(fishes).map(key => (
               <Fish
                 key={key}
                 index={key}
-                details={fishies[key]}
+                details={fishes[key]}
                 addToOrder={addToOrder}
               />
             ))}
