@@ -12,16 +12,16 @@ const App = () => {
   const [fishes, setFishes] = useState({});
   const [order, setOrder] = useState({});
   const { storeId } = useParams();
-  const baseRef = base.ref(`${storeId}/fishes`);
+  const fishRef = base.ref(`${storeId}/fishes`);
 
   useEffect(() => {
-    baseRef.on('value', data => {
+    fishRef.on('value', data => {
       data.val() && setFishes(data.val());
     });
   }, []);
 
   useEffect(() => {
-    baseRef.update(fishes);
+    fishRef.update(fishes);
   }, [fishes]);
 
   const addFish = fish => {
