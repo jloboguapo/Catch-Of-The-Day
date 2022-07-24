@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
@@ -13,6 +12,11 @@ const App = () => {
   const [order, setOrder] = useState({});
   const { storeId } = useParams();
   const fishRef = base.ref(`${storeId}/fishes`);
+  const storeRef = base.ref(`${storeId}/storeId`);
+
+  useEffect(() => {
+    storeId && storeRef.update({ storeId: window.location.pathname.slice(7) });
+  }, []);
 
   useEffect(() => {
     fishRef.on('value', data => {
@@ -26,7 +30,7 @@ const App = () => {
 
   useEffect(() => {
     const localStorageRef = localStorage.getItem(storeId);
-    setOrder(JSON.parse(localStorageRef));
+    localStorageRef && setOrder(JSON.parse(localStorageRef));
   }, [setOrder]);
 
   useEffect(() => {
@@ -35,6 +39,11 @@ const App = () => {
 
   const addFish = fish => {
     fishes[`fish${Date.now()}`] = fish;
+    setFishes({ ...fishes });
+  };
+
+  const updateFish = (key, updatedFish) => {
+    fishes[key] = updatedFish;
     setFishes({ ...fishes });
   };
 
@@ -52,7 +61,7 @@ const App = () => {
       <div className="menu">
         <Header tagline="Fresh Seafood Market" />
         <ul className="fishes">
-          {!isEmpty(fishes) &&
+          {fishes &&
             Object.keys(fishes).map(key => (
               <Fish
                 key={key}
@@ -64,7 +73,12 @@ const App = () => {
         </ul>
       </div>
       <Order fishes={fishes} order={order} />
-      <Inventory addFish={addFish} loadSampleFishes={loadSampleFishes} />
+      <Inventory
+        addFish={addFish}
+        loadSampleFishes={loadSampleFishes}
+        fishes={fishes}
+        updateFish={updateFish}
+      />
     </div>
   );
 };

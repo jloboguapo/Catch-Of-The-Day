@@ -10,15 +10,22 @@ const AddFishForm = ({ addFish }) => {
 
   const createFish = e => {
     e.preventDefault();
+    const { value } = priceRef.current;
     const fish = {
       name: nameRef.current.value,
-      price: parseFloat(priceRef.current.value),
+      price: !Number.isNaN(Number(value)) ? parseFloat(value) : value,
       status: statusRef.current.value,
       desc: descRef.current.value,
       image: imageRef.current.value,
     };
-    addFish(fish);
-    e.currentTarget.reset();
+    if (typeof fish.price === 'string') {
+      alert('Price must be a number');
+    } else if (!fish.name || Number.isNaN(fish.price)) {
+      alert('Fish needs both name and price');
+    } else {
+      addFish(fish);
+      e.currentTarget.reset();
+    }
   };
 
   return (

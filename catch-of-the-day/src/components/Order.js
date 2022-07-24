@@ -37,7 +37,7 @@ const Order = ({ fishes, order }) => {
   return (
     <div className="order-wrap">
       <h2>Order</h2>
-      <ul className="order">{orderIds.map(renderOrder)}</ul>
+      <ul className="order">{order && orderIds.map(renderOrder)}</ul>
       <div className="total">
         Total:
         <strong>{formatPrice(total)}</strong>
