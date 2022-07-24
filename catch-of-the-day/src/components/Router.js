@@ -14,10 +14,7 @@ const Router = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('submit', handlePathChange);
-    return () => {
-      window.removeEventListener('submit', handlePathChange);
-    };
+    window.addEventListener('submit', handlePathChange, { once: true });
   });
 
   return (
