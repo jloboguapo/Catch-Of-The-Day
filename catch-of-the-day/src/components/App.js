@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
@@ -15,8 +16,9 @@ const App = () => {
   const storeRef = base.ref(`${storeId}/storeId`);
 
   useEffect(() => {
-    storeId && storeRef.update({ storeId: window.location.pathname.slice(7) });
-  }, []);
+    !isEmpty(fishes) &&
+      storeRef.update({ storeId: window.location.pathname.slice(7) });
+  }, [fishes]);
 
   useEffect(() => {
     fishRef.on('value', data => {
