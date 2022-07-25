@@ -75,6 +75,11 @@ const App = () => {
     setOrder({ ...order });
   };
 
+  const removeEntireItemFromOrder = key => {
+    delete order[key];
+    setOrder({ ...order });
+  };
+
   return (
     <div className="catch-of-the-day">
       <div className="menu">
@@ -93,7 +98,11 @@ const App = () => {
             ))}
         </ul>
       </div>
-      <Order fishes={fishes} order={order} />
+      <Order
+        fishes={fishes}
+        order={order}
+        removeEntireItemFromOrder={removeEntireItemFromOrder}
+      />
       <Inventory
         addFish={addFish}
         loadSampleFishes={loadSampleFishes}
