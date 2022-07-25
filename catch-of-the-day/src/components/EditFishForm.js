@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EditFishForm = ({ fish, index, updateFish }) => {
+const EditFishForm = ({ fish, index, updateFish, deleteFish }) => {
   const handleChange = e => {
     const updatedFish = {
       ...fish,
@@ -39,6 +39,9 @@ const EditFishForm = ({ fish, index, updateFish }) => {
         onChange={handleChange}
         value={fish.image}
       />
+      <button type="submit" onClick={() => deleteFish(index)}>
+        Remove Fish
+      </button>
     </div>
   );
 };
@@ -47,6 +50,7 @@ EditFishForm.propTypes = {
   fish: PropTypes.object.isRequired,
   index: PropTypes.string.isRequired,
   updateFish: PropTypes.func.isRequired,
+  deleteFish: PropTypes.func.isRequired,
 };
 
 export default EditFishForm;

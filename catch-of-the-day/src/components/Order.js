@@ -27,12 +27,13 @@ const Order = ({ fishes, order }) => {
         </li>
       );
     }
-    return (
-      <li key={key}>
-        {count} lbs {fish.name}
-        {formatPrice(count * fish.price)}
-      </li>
-    );
+    if (count > 0)
+      return (
+        <li key={key}>
+          {count} lbs {fish.name}
+          {formatPrice(count * fish.price)}
+        </li>
+      );
   };
   return (
     <div className="order-wrap">

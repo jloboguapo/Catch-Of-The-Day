@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { formatPrice } from '../helpers';
 
-const Fish = ({ details, addToOrder, index }) => {
+const Fish = ({ details, addToOrder, index, removeFromOrder, order }) => {
+  const found = Object.entries(order).find(
+    ([key, value]) => key === index && value > 0
+  );
   const { image, name, price, desc, status } = details;
   const isAvailable = status === 'available';
 
@@ -19,6 +22,11 @@ const Fish = ({ details, addToOrder, index }) => {
       >
         {isAvailable ? `Add to Order` : `Sold Out`}
       </button>
+      {found && (
+        <button type="submit" onClick={() => removeFromOrder(index)}>
+          Remove from Order
+        </button>
+      )}
     </li>
   );
 };
@@ -27,6 +35,8 @@ Fish.propTypes = {
   details: PropTypes.object.isRequired,
   addToOrder: PropTypes.func.isRequired,
   index: PropTypes.string.isRequired,
+  removeFromOrder: PropTypes.func.isRequired,
+  order: PropTypes.object.isRequired,
 };
 
 export default Fish;

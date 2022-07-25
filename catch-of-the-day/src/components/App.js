@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, flow } from 'lodash';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
@@ -49,12 +49,29 @@ const App = () => {
     setFishes({ ...fishes });
   };
 
+  const deleteFish = key => {
+    const newFishes = flow([
+      Object.entries,
+      arr => arr.filter(([fishKey]) => fishKey !== key),
+      Object.fromEntries,
+    ])(fishes);
+    fishRef.set(null);
+    setFishes(newFishes);
+    localStorage.removeItem(storeId);
+    setOrder({});
+  };
+
   const loadSampleFishes = () => {
     setFishes({ ...sampleFishes });
   };
 
   const addToOrder = key => {
     order[key] = order[key] + 1 || 1;
+    setOrder({ ...order });
+  };
+
+  const removeFromOrder = key => {
+    order[key] > 0 && (order[key] -= 1);
     setOrder({ ...order });
   };
 
@@ -70,6 +87,8 @@ const App = () => {
                 index={key}
                 details={fishes[key]}
                 addToOrder={addToOrder}
+                removeFromOrder={removeFromOrder}
+                order={order}
               />
             ))}
         </ul>
@@ -80,6 +99,7 @@ const App = () => {
         loadSampleFishes={loadSampleFishes}
         fishes={fishes}
         updateFish={updateFish}
+        deleteFish={deleteFish}
       />
     </div>
   );
