@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isEmpty, flow } from 'lodash';
+import { isEmpty } from 'lodash';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
@@ -50,13 +50,9 @@ const App = () => {
   };
 
   const deleteFish = key => {
-    const newFishes = flow([
-      Object.entries,
-      arr => arr.filter(([fishKey]) => fishKey !== key),
-      Object.fromEntries,
-    ])(fishes);
-    fishRef.set(null);
-    setFishes(newFishes);
+    delete fishes[key];
+    base.ref(`${storeId}/fishes/${key}`).remove();
+    setFishes(fishes);
     localStorage.removeItem(storeId);
     setOrder({});
   };
