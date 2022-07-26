@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => {
     !isEmpty(fishes) &&
-      storeRef.update({ storeId: window.location.pathname.slice(7) });
+      storeRef.update({ store: window.location.pathname.slice(7) });
   }, [fishes]);
 
   useEffect(() => {
@@ -105,6 +105,7 @@ const App = () => {
         fishes={fishes}
         updateFish={updateFish}
         deleteFish={deleteFish}
+        storeId={storeId}
       />
     </div>
   );
