@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ref, update } from 'firebase/database';
 import base from '../base';
 
 const StorePicker = ({ storeId }) => {
@@ -10,7 +11,7 @@ const StorePicker = ({ storeId }) => {
   const goToStore = e => {
     const newStore = myInput.current.value;
     e.preventDefault();
-    base.ref(`${newStore}/storeId`).update({ store: newStore });
+    update(ref(base, `${newStore}/storeId`), { store: newStore });
     navigate(`/store/${newStore}`);
   };
 

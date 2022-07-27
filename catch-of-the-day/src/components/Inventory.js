@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import 'firebase/compat/database';
+import { onValue, ref, set } from 'firebase/database';
+import {
+  getAuth,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import PropTypes from 'prop-types';
 import AddFishForm from './addFishForm';
 import EditFishForm from './EditFishForm';
@@ -20,13 +25,14 @@ const Inventory = ({
 }) => {
   const [storeOwner, setStoreOwner] = useState({ uid: null, owner: null });
   const [owner, setOwner] = useState('');
+  const auth = getAuth(firebaseApp);
 
   const authHandler = async authData => {
-    const ownerRef = base.ref(`${storeId}/owner`);
-    await ownerRef.on('value', data => {
+    const ownerRef = ref(base, `${storeId}/owner`);
+    await onValue(ownerRef, data => {
       data.val()
         ? setOwner(Object.values(data.val())[0])
-        : ownerRef.set({ owner: authData.user.uid });
+        : set(ownerRef, { owner: authData.user.uid });
     });
     setStoreOwner({
       uid: authData.user.uid,
@@ -35,20 +41,22 @@ const Inventory = ({
   };
 
   const authenticate = provider => {
-    const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-    firebaseApp.auth().signInWithPopup(authProvider).then(authHandler);
+    const authProvider = new (
+      `${provider}AuthProvider`.includes('Google')
+        ? GoogleAuthProvider
+        : GithubAuthProvider
+    )();
+    signInWithPopup(auth, authProvider).then(authHandler);
   };
 
   const loggingOut = async () => {
     console.log('Logging out!');
-    await firebase.auth().signOut();
+    await signOut(auth);
     setStoreOwner({ uid: null });
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      user && authHandler({ user });
-    });
+    onAuthStateChanged(auth, user => user && authHandler({ user }));
   }, []);
 
   if (!storeOwner.uid) {

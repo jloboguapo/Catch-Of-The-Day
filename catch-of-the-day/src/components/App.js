@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { onValue, ref, remove, update } from 'firebase/database';
 import { useParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import Header from './Header';
@@ -12,22 +13,22 @@ const App = () => {
   const [fishes, setFishes] = useState({});
   const [order, setOrder] = useState({});
   const { storeId } = useParams();
-  const fishRef = base.ref(`${storeId}/fishes`);
-  const storeRef = base.ref(`${storeId}/storeId`);
+  const fishRef = ref(base, `${storeId}/fishes`);
+  const storeRef = ref(base, `${storeId}/storeId`);
 
   useEffect(() => {
     !isEmpty(fishes) &&
-      storeRef.update({ store: window.location.pathname.slice(7) });
+      update(storeRef, { store: window.location.pathname.slice(7) });
   }, [fishes]);
 
   useEffect(() => {
-    fishRef.on('value', data => {
+    onValue(fishRef, data => {
       data.val() && setFishes(data.val());
     });
   }, []);
 
   useEffect(() => {
-    fishRef.update(fishes);
+    update(fishRef, fishes);
   }, [fishes]);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const App = () => {
 
   const deleteFish = key => {
     delete fishes[key];
-    base.ref(`${storeId}/fishes/${key}`).remove();
+    remove(ref(base, `${storeId}/fishes/${key}`));
     setFishes(fishes);
     localStorage.removeItem(storeId);
     setOrder({});

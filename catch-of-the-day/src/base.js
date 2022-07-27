@@ -1,15 +1,13 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import 'firebase/compat/database';
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
-const firebaseApp = firebase.initializeApp({
+const firebaseApp = initializeApp({
   apiKey: 'AIzaSyBngvaNca1Q8PgeUUHpLuSwL-Vj3xsB5HA',
   authDomain: 'catch-of-the-day-juice.firebaseapp.com',
   databaseURL: 'https://catch-of-the-day-juice-default-rtdb.firebaseio.com',
 });
 
-const base = firebaseApp.database();
+const base = getDatabase(firebaseApp);
 
 export { firebaseApp };
 
