@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { onValue, ref, set } from 'firebase/database';
 import {
-  getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -12,7 +11,7 @@ import PropTypes from 'prop-types';
 import AddFishForm from './addFishForm';
 import EditFishForm from './EditFishForm';
 import Login from './Login';
-import base, { firebaseApp } from '../base';
+import base, { auth } from '../base';
 import { logout } from '../helpers';
 
 const Inventory = ({
@@ -25,10 +24,9 @@ const Inventory = ({
 }) => {
   const [storeOwner, setStoreOwner] = useState({ uid: null, owner: null });
   const [owner, setOwner] = useState('');
-  const auth = getAuth(firebaseApp);
+  const ownerRef = ref(base, `${storeId}/owner`);
 
   const authHandler = async authData => {
-    const ownerRef = ref(base, `${storeId}/owner`);
     await onValue(ownerRef, data => {
       data.val()
         ? setOwner(Object.values(data.val())[0])
