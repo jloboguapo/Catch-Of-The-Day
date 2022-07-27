@@ -23,18 +23,16 @@ const Inventory = ({
   storeId,
 }) => {
   const [storeOwner, setStoreOwner] = useState({ uid: null, owner: null });
-  const [owner, setOwner] = useState('');
   const ownerRef = ref(base, `${storeId}/owner`);
 
   const authHandler = async authData => {
     await onValue(ownerRef, data => {
       data.val()
-        ? setOwner(Object.values(data.val())[0])
+        ? setStoreOwner({
+            uid: authData.user.uid,
+            owner: Object.values(data.val())[0],
+          })
         : set(ownerRef, { owner: authData.user.uid });
-    });
-    setStoreOwner({
-      uid: authData.user.uid,
-      owner: owner || authData.user.uid,
     });
   };
 
@@ -48,7 +46,6 @@ const Inventory = ({
   };
 
   const loggingOut = async () => {
-    console.log('Logging out!');
     await signOut(auth);
     setStoreOwner({ uid: null });
   };
