@@ -1,8 +1,0 @@
-node_modules/
-*.zip
-.DS_Store
-.idea
-notes.md
-./catch-of-the-day/build/
-yarn-error.log
-./catch-of-the-day/src/yarn.lock
