@@ -19,10 +19,9 @@ const AddFishForm = ({ addFish }) => {
       desc: descRef.current.value,
       image: imageRef.current.value,
     };
-    console.log(fish.name, fish.price);
     if (typeof fish.price === 'string') {
       alert('Price must be a number');
-    } else if (isEmpty(fish.name) || Number.isNaN(fish.price)) {
+    } else if (isEmpty(fish.name) || isEmpty(fish.price)) {
       alert('Fish needs both name and price');
     } else {
       addFish(fish);
