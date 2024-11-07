@@ -7,30 +7,31 @@ const Order = ({ fishes, order }) => {
   const orderIds = Object.keys(order);
   const total = orderIds.reduce((prevTotal, key) => {
     const fish = fishes[key];
-    const { price, status } = fish;
     const count = order[key];
-    const available = fish && status;
+    const available = fish && fish.status;
 
     if (available) {
-      return prevTotal + count * price;
+      return prevTotal + count * fish.price;
     }
     return prevTotal;
   }, 0);
 
   const renderOrder = key => {
     const fish = fishes[key];
-    const { name, price, status } = fish;
     const count = order[key];
 
-    if (!status)
+    if (!fish) return null;
+    if (!fish.status)
       return (
-        <li key={key}>Sorry {fish ? name : 'fish'} is no longer available</li>
+        <li key={key}>
+          Sorry {fish ? fish.name : 'fish'} is no longer available
+        </li>
       );
 
     return (
       <li key={key}>
-        {count} lbs {name}
-        <span>&nbsp;{formatPrice(count * price)}</span>
+        {count} lbs {fish.name}
+        <span>&nbsp;{formatPrice(count * fish.price)}</span>
       </li>
     );
   };
