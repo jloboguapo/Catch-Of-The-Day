@@ -8,7 +8,6 @@ const Fish = ({ details, addToOrder, index, removeFromOrder, order }) => {
     ([key, value]) => key === index && value > 0
   );
   const { image, name, price, desc, status } = details;
-  const isAvailable = status === 'available';
 
   return (
     <li className="menu-fish">
@@ -17,11 +16,11 @@ const Fish = ({ details, addToOrder, index, removeFromOrder, order }) => {
       <span className="price">{formatPrice(price)}</span>
       <p>{desc}</p>
       <button
-        disabled={!isAvailable}
+        disabled={!status}
         onClick={() => addToOrder(index)}
         type="submit"
       >
-        {isAvailable ? 'Add to Order' : 'Sold Out'}
+        {status ? 'Add to Order' : 'Sold Out'}
       </button>
       {found && (
         <button type="submit" onClick={() => removeFromOrder(index)}>

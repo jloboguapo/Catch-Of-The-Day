@@ -15,7 +15,7 @@ const AddFishForm = ({ addFish }) => {
     const fish = {
       name: nameRef.current.value,
       price: !Number.isNaN(Number(value)) ? parseFloat(value) : value,
-      status: statusRef.current.value,
+      status: statusRef.current.value === 'true',
       desc: descRef.current.value,
       image: imageRef.current.value,
     };
@@ -34,8 +34,8 @@ const AddFishForm = ({ addFish }) => {
       <input name="name" ref={nameRef} type="text" placeholder="Name" />
       <input name="price" ref={priceRef} type="text" placeholder="Price" />
       <select name="status" ref={statusRef}>
-        <option value="available">Fresh!</option>
-        <option value="unavailable">Sold out!</option>
+        <option value>Fresh!</option>
+        <option value={false}>Sold out!</option>
       </select>
       <textarea name="desc" ref={descRef} placeholder="Desc" />
       <input name="image" ref={imageRef} type="text" placeholder="Image" />
