@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { formatPrice } from '../helpers';
 
@@ -19,34 +20,56 @@ const Order = ({ fishes, order, removeEntireItemFromOrder }) => {
   const renderOrder = key => {
     const fish = fishes[key];
     const count = order[key];
+    const transitionOptions = {
+      classNames: 'order',
+      key,
+      timeout: { enter: 500, exit: 500 },
+    };
 
     if (!fish || count === 0) return null;
     if (!fish.status)
       return (
-        <li key={key}>
-          Sorry {fish ? fish.name : 'fish'} is no longer available
-        </li>
+        <CSSTransition {...transitionOptions}>
+          <li key={key}>
+            Sorry {fish ? fish.name : 'fish'} is no longer available
+          </li>
+        </CSSTransition>
       );
 
     return (
-      <li key={key}>
-        {count} lbs {fish.name}
-        <span>&nbsp;{formatPrice(count * fish.price)}</span>
-        <button
-          className="x-button"
-          type="submit"
-          onClick={() => removeEntireItemFromOrder(key)}
-        >
-          &times;
-        </button>
-      </li>
+      <CSSTransition {...transitionOptions}>
+        <li key={key}>
+          <span>
+            <TransitionGroup component="span" className="count">
+              <CSSTransition
+                classNames="count"
+                key={count}
+                timeout={{ enter: 500, exit: 500 }}
+              >
+                <span>{count}&nbsp;</span>
+              </CSSTransition>
+            </TransitionGroup>
+            lbs {fish.name}
+            <span>&nbsp;{formatPrice(count * fish.price)}</span>
+          </span>
+          <button
+            className="x-button"
+            type="submit"
+            onClick={() => removeEntireItemFromOrder(key)}
+          >
+            &times;
+          </button>
+        </li>
+      </CSSTransition>
     );
   };
 
   return (
     <div className="order-wrap">
       <h2>Order</h2>
-      <ul className="order">{orderIds.map(renderOrder)}</ul>
+      <TransitionGroup component="ul" className="order">
+        {orderIds.map(renderOrder)}
+      </TransitionGroup>
       <div className="total">
         <strong>{formatPrice(total)}</strong>
       </div>
