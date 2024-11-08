@@ -24,7 +24,7 @@ const Fish = ({ details, addToOrder, index, removeFromOrder, order }) => {
       </button>
       {found && (
         <button type="submit" onClick={() => removeFromOrder(index)}>
-          removeFromOrder
+          Remove from Order
         </button>
       )}
     </li>
