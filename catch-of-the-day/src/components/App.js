@@ -46,6 +46,11 @@ const App = () => {
     setFishes({ ...fishes });
   };
 
+  const updateFish = (key, updatedFish) => {
+    fishes[key] = updatedFish;
+    setFishes({ ...fishes });
+  };
+
   const loadSampleFishes = () => {
     setFishes({ ...sampleFishes });
   };
@@ -82,6 +87,7 @@ const App = () => {
       <Inventory
         addFish={addFish}
         fishes={fishes}
+        updateFish={updateFish}
         loadSampleFishes={loadSampleFishes}
       />
     </div>
