@@ -3,7 +3,7 @@ import React from 'react';
 
 import { formatPrice } from '../helpers';
 
-const Order = ({ fishes, order }) => {
+const Order = ({ fishes, order, removeEntireItemFromOrder }) => {
   const orderIds = Object.keys(order);
   const total = orderIds.reduce((prevTotal, key) => {
     const fish = fishes[key];
@@ -32,6 +32,13 @@ const Order = ({ fishes, order }) => {
       <li key={key}>
         {count} lbs {fish.name}
         <span>&nbsp;{formatPrice(count * fish.price)}</span>
+        <button
+          className="x-button"
+          type="submit"
+          onClick={() => removeEntireItemFromOrder(key)}
+        >
+          &times;
+        </button>
       </li>
     );
   };
@@ -50,6 +57,7 @@ const Order = ({ fishes, order }) => {
 Order.propTypes = {
   fishes: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired,
+  removeEntireItemFromOrder: PropTypes.func.isRequired,
 };
 
 export default Order;

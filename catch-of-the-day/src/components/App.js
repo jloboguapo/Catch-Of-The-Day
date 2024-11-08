@@ -1,4 +1,4 @@
-import { onValue, ref, update } from 'firebase/database';
+import { onValue, ref, remove, update } from 'firebase/database';
 import isEmpty from 'lodash.isempty';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -51,6 +51,14 @@ const App = () => {
     setFishes({ ...fishes });
   };
 
+  const deleteFish = key => {
+    delete fishes[key];
+    remove(ref(base, `${storeId}/fishes/${key}`));
+    setFishes(fishes);
+    localStorage.removeItem(storeId);
+    setOrder({});
+  };
+
   const loadSampleFishes = () => {
     setFishes({ ...sampleFishes });
   };
@@ -62,6 +70,11 @@ const App = () => {
 
   const removeFromOrder = key => {
     order[key] > 0 && (order[key] -= 1);
+    setOrder({ ...order });
+  };
+
+  const removeEntireItemFromOrder = key => {
+    delete order[key];
     setOrder({ ...order });
   };
 
@@ -83,11 +96,16 @@ const App = () => {
             ))}
         </ul>
       </div>
-      <Order fishes={fishes} order={order} />
+      <Order
+        fishes={fishes}
+        order={order}
+        removeEntireItemFromOrder={removeEntireItemFromOrder}
+      />
       <Inventory
         addFish={addFish}
         fishes={fishes}
         updateFish={updateFish}
+        deleteFish={deleteFish}
         loadSampleFishes={loadSampleFishes}
       />
     </div>
