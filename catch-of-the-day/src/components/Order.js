@@ -20,7 +20,7 @@ const Order = ({ fishes, order }) => {
     const fish = fishes[key];
     const count = order[key];
 
-    if (!fish) return null;
+    if (!fish || count === 0) return null;
     if (!fish.status)
       return (
         <li key={key}>
