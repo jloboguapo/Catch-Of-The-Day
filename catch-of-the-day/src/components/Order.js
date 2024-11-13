@@ -22,14 +22,13 @@ const Order = ({ fishes, order, removeEntireItemFromOrder }) => {
     const count = order[key];
     const transitionOptions = {
       classNames: 'order',
-      key,
       timeout: { enter: 500, exit: 500 },
     };
 
     if (!fish || count === 0) return null;
     if (!fish.status)
       return (
-        <CSSTransition {...transitionOptions}>
+        <CSSTransition key={key} {...transitionOptions}>
           <li key={key}>
             Sorry {fish ? fish.name : 'fish'} is no longer available
           </li>
@@ -37,7 +36,7 @@ const Order = ({ fishes, order, removeEntireItemFromOrder }) => {
       );
 
     return (
-      <CSSTransition {...transitionOptions}>
+      <CSSTransition key={key} {...transitionOptions}>
         <li key={key}>
           <span>
             <TransitionGroup component="span" className="count">
