@@ -351,6 +351,9 @@ input#fold:checked + label {
   background: #fff;
   color: #000;
 }
+.x-button {
+  float: right;
+}
 ul {
   list-style: none;
   margin: 0;

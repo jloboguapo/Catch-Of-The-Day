@@ -2,6 +2,7 @@
   "name": "cotd",
   "version": "0.0.3",
   "private": true,
+  "extends": "wesbos",
   "devDependencies": {
     "concurrently": "9.0.1",
     "eslint": "^8.57.1",
