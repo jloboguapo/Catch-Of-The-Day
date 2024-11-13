@@ -1,17 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const Login = ({ authenticate }) => (
   <nav className="login">
     <h2>Inventory Login</h2>
-    <p>Sign in to manage your store's inventory</p>
-    <button
-      type="submit"
-      className="facebook"
-      onClick={() => authenticate('Google')}
-    >
-      Log in with Google
-    </button>
+    <p>Log in to manage your store's inventory</p>
     <button
       type="submit"
       className="github"

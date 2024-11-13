@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import { onValue, ref, remove, update } from 'firebase/database';
+import isEmpty from 'lodash.isempty';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
-import Header from './Header';
-import Order from './Order';
-import Inventory from './Inventory';
+
 import Fish from './Fish';
-import sampleFishes from '../sample-fishes';
+import Header from './Header';
+import Inventory from './Inventory';
+import Order from './Order';
 import base from '../base';
+import sampleFishes from '../sample-fishes';
 
 const App = () => {
   const [fishes, setFishes] = useState({});
@@ -102,10 +103,10 @@ const App = () => {
       />
       <Inventory
         addFish={addFish}
-        loadSampleFishes={loadSampleFishes}
         fishes={fishes}
         updateFish={updateFish}
         deleteFish={deleteFish}
+        loadSampleFishes={loadSampleFishes}
         storeId={storeId}
       />
     </div>

@@ -1,19 +1,10 @@
 {
   "extends": [
-    "wesbos"
+    "universe/web"
   ],
   "rules": {
-    "lines-around-comment": [
-      2,
-      {
-        "afterBlockComment": true,
-        "afterLineComment": true,
-        "beforeBlockComment": true,
-        "beforeLineComment": true
-      }
-    ],
     "no-unused-expressions": [
-      "error",
+      2,
       {
         "allowShortCircuit": true,
         "allowTernary": true

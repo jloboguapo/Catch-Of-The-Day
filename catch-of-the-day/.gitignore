@@ -1,9 +1,5 @@
-.vercel
-node_modules/
-*.zip
-.DS_Store
-.idea
-notes.md
+package-lock.json
 build/
-yarn-error.log
-yarn.lock
+node_modules/
+now.json
+security-rules.json

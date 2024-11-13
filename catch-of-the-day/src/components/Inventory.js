@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { onValue, ref, set } from 'firebase/database';
 import {
   GithubAuthProvider,
-  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+import { onValue, ref, set } from 'firebase/database';
 import PropTypes from 'prop-types';
-import AddFishForm from './addFishForm';
+import React, { useEffect, useState } from 'react';
+
+import AddFishForm from './AddFishForm';
 import EditFishForm from './EditFishForm';
 import Login from './Login';
 import base, { auth } from '../base';
@@ -36,12 +36,8 @@ const Inventory = ({
     });
   };
 
-  const authenticate = provider => {
-    const authProvider = new (
-      `${provider}AuthProvider`.includes('Google')
-        ? GoogleAuthProvider
-        : GithubAuthProvider
-    )();
+  const authenticate = () => {
+    const authProvider = new GithubAuthProvider();
     signInWithPopup(auth, authProvider).then(authHandler);
   };
 
@@ -57,6 +53,7 @@ const Inventory = ({
   if (!storeOwner.uid) {
     return <Login authenticate={authenticate} />;
   }
+
   if (storeOwner.uid !== storeOwner.owner) {
     return (
       <div>
@@ -65,6 +62,7 @@ const Inventory = ({
       </div>
     );
   }
+
   return (
     <div className="inventory">
       <h2>Inventory</h2>
@@ -79,9 +77,7 @@ const Inventory = ({
         />
       ))}
       <AddFishForm addFish={addFish} />
-      <button type="submit" onClick={loadSampleFishes}>
-        Load Sample
-      </button>
+      <button onClick={loadSampleFishes}>Load Sample Fishes</button>
     </div>
   );
 };
