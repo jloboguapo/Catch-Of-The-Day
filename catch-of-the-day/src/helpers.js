@@ -5,6 +5,12 @@ export function formatPrice(cents) {
   });
 }
 
+export const logout = loggingOut => (
+  <button type="button" onClick={loggingOut}>
+    Log Out!
+  </button>
+);
+
 export function rando(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }

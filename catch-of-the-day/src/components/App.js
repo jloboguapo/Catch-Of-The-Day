@@ -107,6 +107,7 @@ const App = () => {
         updateFish={updateFish}
         deleteFish={deleteFish}
         loadSampleFishes={loadSampleFishes}
+        storeId={storeId}
       />
     </div>
   );
